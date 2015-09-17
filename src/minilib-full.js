@@ -1,10 +1,10 @@
 /**
- * Minilib JS
- * v0.1
+ * Ajax HTTP
  * 
+ * Ajax asynchronous singleton object
  * Find docs on https://github.com/Choko256/js-minilib
  * 
- * MIT License
+ * @license MIT License
  */
 
 var HTTP = (function() {
@@ -60,6 +60,14 @@ var HTTP = (function() {
 
 	return self;
 })();
+/**
+ * Uploady v1.0
+ * 
+ * File upload manager in pure Javascript
+ * Find docs on https://github.com/Choko256/js-minilib
+ * 
+ * @license MIT License
+ */
 
 var Uploady = function(options) {
 
@@ -283,4 +291,3 @@ var Uploady = function(options) {
 		files = [];
 	};
 };
-

@@ -4,7 +4,7 @@
  * Ajax asynchronous singleton object
  * Find docs on https://github.com/Choko256/js-minilib
  * 
- * MIT License
+ * @license MIT License
  */
 
 var HTTP = (function() {

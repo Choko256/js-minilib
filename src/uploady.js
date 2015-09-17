@@ -4,7 +4,7 @@
  * File upload manager in pure Javascript
  * Find docs on https://github.com/Choko256/js-minilib
  * 
- * MIT License
+ * @license MIT License
  */
 
 var Uploady = function(options) {
