@@ -9,9 +9,10 @@
 
 var Uploady = function(options) {
 
-	var UploadyFile = function(fileid, file, options) {
+	var UploadyFile = function(fileid, file, file_field) {
 		this.id = fileid;
 		this.file = file;
+		this.fileField = file_field;
 		
 		this.fileName = function() {
 			return this.file.name;
@@ -36,13 +37,23 @@ var Uploady = function(options) {
 	var files = [];
 	var lastFileId = 0;
 
-	this.addFile = function(_file, options) {
+	this.addFile = function(_file, options, file_field) {
 		var item = new UploadyFile(lastFileId, _file);
+		if(file_field) {
+			item.fileField = file_field;
+		}
 		for(var k in options) {
 			item[k] = options[k];
 		}
 		files.push(item);
 		lastFileId++;
+		return item;
+	};
+
+	this.addFiles = function(_files, options) {
+		for(var k in _files) {
+			this.addFile(_files[k], options, k);
+		}
 	};
 
 	this.removeFile = function(fileid) {
@@ -81,7 +92,7 @@ var Uploady = function(options) {
 		}
 		for(var i = 0; i < files.length; i++) {
 			xhr.upload.items.push(files[i]);
-			formData.append(this.fileField + i, files[i].file);
+			formData.append(files[i].fileField ? files[i].fileField : (self.fileField+i), files[i].file);
 		}
 		for(var k in this.appendData) {
 			formData.append(k, this.appendData[k]);

@@ -179,8 +179,16 @@ var uploady = new Uploady({
 
 When you have configured your Uploady instance, you can add files to it :
 
+#### In multiple request mode
+
 ```javascript
 uploady.addFile(file, options);
+```
+
+#### In single request mode
+```javascript
+// `files` is an object, where key is the file field and value is the File object
+uploady.addFiles(files, options);
 ```
 
 You can add everything you want in the options object, you can retreive them in the different callbacks when the File Item is returned.
