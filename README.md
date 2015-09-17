@@ -1,0 +1,2 @@
+# js-minilib
+Javascript utilities
