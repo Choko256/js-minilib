@@ -2,7 +2,7 @@
  * Ajax HTTP
  * 
  * Ajax asynchronous singleton object
- * Find docs on https://github.com/Choko256/uploady
+ * Find docs on https://github.com/Choko256/js-minilib
  * 
  * MIT License
  */
