@@ -102,7 +102,7 @@ var uploady = new Uploady({
     */
     fileField: "filename",
     /*
-    	singleRequest: By default, Uploady will sent one request
+    	singleRequest: By default, Uploady will send one request
         per file. You can override this behaviour by setting
         `singleRequest` to `true`
     */
@@ -134,7 +134,7 @@ var uploady = new Uploady({
     	console.log("File " + data.file.name + " sent !");
     },
     /*
-    	onError: Function called each time a file request get an
+    	onError: Function called each time a file request gets an
         error response
         	- data: object containing response information
         		- status: Status code of the HTTP response
@@ -144,7 +144,7 @@ var uploady = new Uploady({
     	console.log("File " + data.file.name + " error " + data.status);
     },
     /*
-    	onProgress: Function called when upload progress changed
+    	onProgress: Function called when upload progress changes
         	- item: File Item (null in case of single request)
         	- current: Current bytes sent
         	- total: Total bytes to send
