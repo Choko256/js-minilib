@@ -197,7 +197,7 @@ uploady.upload();
 
 ## License
 
-Minilib is under the terms specified in the [LICENSE](/LICENSE.md/) file.
+Minilib is under the terms specified in the [LICENSE](/LICENSE) file.
 
 ## About
 
