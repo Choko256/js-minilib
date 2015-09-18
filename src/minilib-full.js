@@ -1,7 +1,6 @@
 /**
- * Ajax HTTP
+ * Minilib JS
  * 
- * Ajax asynchronous singleton object
  * Find docs on https://github.com/Choko256/js-minilib
  * 
  * @license MIT License
