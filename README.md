@@ -221,7 +221,7 @@ Move the JS files into your static files directory and you just have to referenc
 To regenerate minified versions of the JS source files, you will have to install some software on your computer :
 
 ```sh
-# apt-get install nodejs node-uglify
+$ sudo apt-get install nodejs node-uglify
 ```
 
 Then in the root directory of the library run :
