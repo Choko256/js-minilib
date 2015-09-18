@@ -202,6 +202,34 @@ When you have added your files to your `Uploady` instance, you just have to send
 uploady.upload();
 ```
 
+## Installation
+To use the `js-minilib` library, you have to get the minified js files in the `dist` directory. If you want to take a look at the development version, you will find it in the `src` directory.
+
+There are 3 files :
+ * `ajax.js` : Ajax HTTP Module
+ * `uploady.js` : Uploady File Upload module
+ * `minilib-full.js` : Full library with both Ajax and upload modules
+
+Move the JS files into your static files directory and you just have to reference them in your HTML files :
+
+```html
+<script type="text/javascript" src="/my/static/files/minilib-full.min.js"></script>
+```
+
+## Regenerate minified versions
+
+To regenerate minified versions of the JS source files, you will have to install some software on your computer :
+
+```sh
+# apt-get install nodejs node-uglify
+```
+
+Then in the root directory of the library run :
+```sh
+$ make
+```
+
+Once `make` is done, there is nothing more to do, you have successfully minified the library !
 
 ## License
 
