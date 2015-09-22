@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Uploady v1.0
  * 
