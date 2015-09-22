@@ -202,12 +202,94 @@ When you have added your files to your `Uploady` instance, you just have to send
 uploady.upload();
 ```
 
+## Event
+
+Event module contains one object `EventThrower` which can be used or inherited, and can store callbacks for triggering events.
+
+### Using the Event Thrower
+
+You can instantiate an `EventThrower` object into your javascript :
+
+```javascript
+var et = new EventThrower();
+// To bind an event 
+et.on('myevent', function(ev) { /* my code here ... */ });
+// To unbind an event
+et.off('myevent');
+// To manually trigger an event
+et.trigger('myevent', [ /* my args here */ ]);
+```
+
+### Extending the Event Thrower
+
+You can also create an object which extends the `EventThrower` object :
+
+```javascript
+var CustomEventThrower = function() {
+    EventThrower.call(this);
+    /* My object code here */  
+};
+CustomEventThrower.prototype = Object.create(EventThrower.prototype);
+CustomEventThrower.prototype.constructor = EventThrower;
+```
+
+Then you can bind events to your `CustomEventThrower` object directly with the `on`, `off`, and `trigger` methods.
+
+## Modal
+
+Modal is a simple module which helps developer to create modal popups.
+
+### Initialization and Configuration
+
+```javascript
+window.onload = function() {
+    var myModal = Modal.init("myModal", {
+        /*
+            height: Forced height for the modal div
+        */
+        height: '300px;',
+        /*
+            width: Forced width for the modal div
+        */
+        width: '500px;',
+        /*
+            backdrop: Style of the background mask
+                - false: No backdrop
+                - true: Backdrop
+                - 'clickable': Backdrop which closes the modal when clicked
+        */
+        backdrop: 'clickable'
+    });
+};
+```
+
+### Show and Hide the modal
+
+Showing or hiding the modal is really easy :
+
+```javascript
+// I show the modal
+myModal.show();
+// I hide the modal
+myModal.hide();
+```
+
+### Bind events
+
+If you includes the Event module in your script section, Modal can throw 3 events :
+
+* `init` : Thrown when `init` method has been successful
+* `shown` : Thrown after the modal has been shown
+* `hidden` : Thrown after the modal has been hidden
+
 ## Installation
 To use the `js-minilib` library, you have to get the minified js files in the `dist` directory. If you want to take a look at the development version, you will find it in the `src` directory.
 
-There are 3 files :
+There are 5 files :
  * `ajax.js` : Ajax HTTP Module
  * `uploady.js` : Uploady File Upload module
+ * `event.js` : Event Thrower module
+ * `modal.js` : Simple Modal module
  * `minilib-full.js` : Full library with both Ajax and upload modules
 
 Move the JS files into your static files directory and you just have to reference them in your HTML files :
