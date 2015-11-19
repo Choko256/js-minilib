@@ -1,20 +1,20 @@
 "use strict";
 /**
  * Uploady v1.0
- * 
+ *
  * File upload manager in pure Javascript
  * Find docs on https://github.com/Choko256/js-minilib
- * 
+ *
  * @license MIT License
  */
 
 var Uploady = function(options) {
-
+	var self = this;
 	var UploadyFile = function(fileid, file, file_field) {
 		this.id = fileid;
 		this.file = file;
 		this.fileField = file_field;
-		
+
 		this.fileName = function() {
 			return this.file.name;
 		};
@@ -23,22 +23,22 @@ var Uploady = function(options) {
 	if(typeof(options) !== 'object') {
 		options = {};
 	}
-	this.onProgress = options.onProgress;
-	this.onSuccess = options.onSuccess;
-	this.onError = options.onError;
-	this.onStarted = options.onStarted;
-	this.onFinished = options.onFinished;
-	this.fileField = options.fileField ? options.fileField : "upfile";
-	this.appendData = options.appendData ? options.appendData : {};
-	this.requestHeaders = options.requestHeaders ? options.requestHeaders : {};
-	this.targetUrl = options.targetUrl;
+	self.onProgress = options.onProgress;
+	self.onSuccess = options.onSuccess;
+	self.onError = options.onError;
+	self.onStarted = options.onStarted;
+	self.onFinished = options.onFinished;
+	self.fileField = options.fileField ? options.fileField : "upfile";
+	self.appendData = options.appendData ? options.appendData : {};
+	self.requestHeaders = options.requestHeaders ? options.requestHeaders : {};
+	self.targetUrl = options.targetUrl;
 
-	this.singleRequest = options.singleRequest ? options.singleRequest : false;
+	self.singleRequest = options.singleRequest ? options.singleRequest : false;
 
 	var files = [];
 	var lastFileId = 0;
 
-	this.addFile = function(_file, options, file_field) {
+	self.addFile = function(_file, options, file_field) {
 		var item = new UploadyFile(lastFileId, _file);
 		if(file_field) {
 			item.fileField = file_field;
@@ -51,13 +51,13 @@ var Uploady = function(options) {
 		return item;
 	};
 
-	this.addFiles = function(_files, options) {
+	self.addFiles = function(_files, options) {
 		for(var k in _files) {
-			this.addFile(_files[k], options, k);
+			self.addFile(_files[k], options, k);
 		}
 	};
 
-	this.removeFile = function(fileid) {
+	self.removeFile = function(fileid) {
 		for(var i = 0; i < files.length; i++) {
 			if(files[i].id == fileid) {
 				return files.splice(i, 1);
@@ -66,9 +66,9 @@ var Uploady = function(options) {
 		return null;
 	};
 
-	this.finish = function(nSuccess, nError, nTreated) {
-		if(this.onFinished) {
-			this.onFinished({
+	self.finish = function(nSuccess, nError, nTreated) {
+		if(self.onFinished) {
+			self.onFinished({
 				total: nTreated,
 				succeed: nSuccess,
 				failed: nError
@@ -76,27 +76,26 @@ var Uploady = function(options) {
 		}
 	};
 
-	this.setSingleRequest = function(flag) {
-		this.singleRequest = flag;
+	self.setSingleRequest = function(flag) {
+		self.singleRequest = flag;
 	};
 
 	var uploadSingleRequest = function() {
-		var self = this;
 		var xhr = new XMLHttpRequest();
 		var formData = new FormData();
-		if(this.onStarted) {
-			this.onStarted(null, xhr);
+		if(self.onStarted) {
+			self.onStarted(null, xhr);
 		}
 		xhr.upload.items = [];
-		for(var k in this.requestHeaders) {
-			xhr.setRequestHeader(k, this.requestHeaders[k]);
+		for(var k in self.requestHeaders) {
+			xhr.setRequestHeader(k, self.requestHeaders[k]);
 		}
 		for(var i = 0; i < files.length; i++) {
 			xhr.upload.items.push(files[i]);
 			formData.append(files[i].fileField ? files[i].fileField : (self.fileField+i), files[i].file);
 		}
-		for(var k in this.appendData) {
-			formData.append(k, this.appendData[k]);
+		for(var k in self.appendData) {
+			formData.append(k, self.appendData[k]);
 		}
 
 		xhr.upload.addEventListener('progress', function(ev) {
@@ -146,30 +145,29 @@ var Uploady = function(options) {
 
 	var uploadMultiRequest = function() {
 		var nSuccess = 0, nError = 0, nTreated = 0;
-		var self = this;
 		for(var i = 0; i < files.length; i++) {
 			var item = files[i];
 			var xhr = new XMLHttpRequest();
-			if(this.onStarted) {
-				this.onStarted(item, xhr);
+			if(self.onStarted) {
+				self.onStarted(item, xhr);
 			}
 			xhr.upload.item = item;
-			for(var k in this.requestHeaders) {
-				xhr.setRequestHeader(k, this.requestHeaders[k]);
+			for(var k in self.requestHeaders) {
+				xhr.setRequestHeader(k, self.requestHeaders[k]);
 			}
 			var formData = new FormData();
-			formData.append(this.fileField, item.file);
-			for(var k in this.appendData) {
-				formData.append(k, this.appendData[k]);
+			formData.append(self.fileField, item.file);
+			for(var k in self.appendData) {
+				formData.append(k, self.appendData[k]);
 			}
 			xhr.upload.addEventListener('progress', function(ev) {
 				if(ev.lengthComputable) {
 					if(self.onProgress) {
-						self.onProgress(this.item, ev.loaded, ev.total);
+						self.onProgress(self.item, ev.loaded, ev.total);
 					}
 				} else {
 					if(self.onProgress) {
-						self.onProgress(this.item);
+						self.onProgress(self.item);
 					}
 				}
 			});
@@ -218,15 +216,15 @@ var Uploady = function(options) {
 		}
 	};
 
-	this.upload = function() {
-		if(!this.singleRequest) {
+	self.upload = function() {
+		if(!self.singleRequest) {
 			uploadMultiRequest();
 		} else {
 			uploadSingleRequest();
 		}
 	};
 
-	this.clear = function() {
+	self.clear = function() {
 		files = [];
 	};
 };
