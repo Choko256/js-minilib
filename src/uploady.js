@@ -163,11 +163,11 @@ var Uploady = function(options) {
 			xhr.upload.addEventListener('progress', function(ev) {
 				if(ev.lengthComputable) {
 					if(self.onProgress) {
-						self.onProgress(self.item, ev.loaded, ev.total);
+						self.onProgress(this.item, ev.loaded, ev.total);
 					}
 				} else {
 					if(self.onProgress) {
-						self.onProgress(self.item);
+						self.onProgress(this.item);
 					}
 				}
 			});
